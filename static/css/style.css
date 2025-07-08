@@ -1,0 +1,125 @@
+/* Кастомные стили для интернет-магазина */
+
+/* Общие стили */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Анимации */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стили для карточек товаров */
+.product-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.product-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Стили для изображений */
+.product-image {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+/* Стили для цен */
+.price-tag {
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.3);
+}
+
+/* Стили для кнопок */
+.btn {
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Стили для навигации */
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+/* Стили для футера */
+footer {
+    margin-top: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .product-detail-image {
+        max-height: 300px;
+    }
+    
+    .price-display {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
+
+/* Стили для хлебных крошек */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0.5rem 0;
+}
+
+.breadcrumb-item a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+/* Стили для алертов */
+.alert {
+    border-radius: 15px;
+    border: none;
+}
+
+/* Плавная прокрутка */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Стили для загрузки */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Анимация для кнопок */
+.btn-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}

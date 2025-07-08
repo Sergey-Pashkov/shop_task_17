@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    .product-detail-image {
+        max-height: 500px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .price-display {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 25px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+    
+    .product-info {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .back-button {
+        background: linear-gradient(45deg, #6c757d, #495057);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: transform 0.2s;
+    }
+    
+    .back-button:hover {
+        transform: translateY(-2px);
+        color: white;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'shop:product_list' %}">Каталог товаров</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Изображение товара -->
+    <div class="col-lg-6 mb-4">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="product-detail-image" alt="{{ product.name }}">
+        {% else %}
+            <div class="product-detail-image bg-light d-flex align-items-center justify-content-center">
+                <div class="text-center text-muted">
+                    <i class="fas fa-image fa-5x mb-3"></i>
+                    <p>Изображение отсутствует</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Информация о товаре -->
+    <div class="col-lg-6">
+        <div class="product-info">
+            <h1 class="display-5 mb-3">{{ product.name }}</h1>
+            
+            <!-- Цена -->
+            <div class="price-display mb-4">
+                {{ product.price|floatformat:2 }} ₽
+            </div>
+            
+            <!-- Описание -->
+            <div class="mb-4">
+                <h4>Описание товара</h4>
+                <p class="lead">{{ product.description|linebreaks }}</p>
+            </div>
+            
+            <!-- Дополнительная информация -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <strong>Дата добавления:</strong><br>
+                    <span class="text-muted">{{ product.created_at|date:"d.m.Y H:i" }}</span>
+                </div>
+                <div class="col-sm-6">
+                    <strong>ID товара:</strong><br>
+                    <span class="text-muted">#{{ product.id }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Кнопки действий -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <button class="btn btn-success btn-lg me-md-2" type="button">
+                <i class="fas fa-shopping-cart"></i> В корзину
+            </button>
+            <button class="btn btn-outline-warning btn-lg" type="button">
+                <i class="fas fa-heart"></i> В избранное
+            </button>
+        </div>
+        
+        <!-- Кнопка возврата -->
+        <div class="mt-4">
+            <a href="{% url 'shop:product_list' %}" class="back-button">
+                <i class="fas fa-arrow-left"></i> Вернуться к каталогу
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Дополнительная информация -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Дополнительная информация</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <strong>🚚 Доставка:</strong><br>
+                        <span class="text-muted">По всей России</span>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>💳 Оплата:</strong><br>
+                        <span class="text-muted">Наличными или картой</span>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>🔄 Возврат:</strong><br>
+                        <span class="text-muted">В течение 14 дней</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Font Awesome для иконок -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<script>
+    // Простая анимация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        const productInfo = document.querySelector('.product-info');
+        productInfo.style.opacity = '0';
+        productInfo.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+            productInfo.style.transition = 'all 0.6s ease';
+            productInfo.style.opacity = '1';
+            productInfo.style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
+{% endblock %}
