@@ -24,10 +24,19 @@ def product_detail(request, product_id):
     """
     Представление для отображения детальной информации о товаре.
     Принимает ID товара и отображает всю информацию о нем.
-    Если товар не найден, возвращает страницу 404.
+    Если товар не найден, возвращает страницу 404 с рекомендациями.
     """
     # Получаем товар по ID или возвращаем 404, если не найден
-    product = get_object_or_404(Product, id=product_id)
+    try:
+        product = get_object_or_404(Product, id=product_id)
+    except:
+        # Если товар не найден, получаем другие товары для рекомендаций
+        other_products = Product.objects.all()[:3]  # Первые 3 товара
+        context = {
+            'other_products': other_products,
+            'title': 'Товар не найден'
+        }
+        return render(request, '404.html', context, status=404)
     
     # Передаем товар в контексте шаблона
     context = {

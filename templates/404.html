@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Товар не найден{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+        <!-- 404 Ошибка -->
+        <div class="error-404">
+            <div class="display-1 text-muted mb-4">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h1 class="display-4 mb-4">Товар не найден</h1>
+            <p class="lead mb-4">
+                К сожалению, товар с указанным ID не существует в нашем каталоге.
+                Возможно, товар был удален или ссылка указана неверно.
+            </p>
+            
+            <!-- Действия для пользователя -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
+                <a href="{% url 'shop:product_list' %}" class="btn btn-primary btn-lg me-md-2">
+                    <i class="fas fa-arrow-left"></i> Вернуться к каталогу
+                </a>
+                <a href="/admin/" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-cog"></i> Админ-панель
+                </a>
+            </div>
+            
+            <!-- Дополнительная помощь -->
+            <div class="alert alert-info" role="alert">
+                <h5 class="alert-heading">Что вы можете сделать:</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>✅ Проверьте правильность URL адреса</li>
+                    <li>✅ Перейдите в каталог товаров</li>
+                    <li>✅ Обратитесь к администратору</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Рекомендуемые товары (если есть) -->
+{% if other_products %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h3 class="text-center mb-4">Возможно, вас заинтересуют эти товары:</h3>
+        <div class="row">
+            {% for product in other_products %}
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.price|floatformat:2 }} ₽</p>
+                        <a href="{% url 'shop:product_detail' product.id %}" class="btn btn-primary">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-404 {
+        padding: 50px 0;
+    }
+    
+    .display-1 {
+        font-size: 8rem;
+        color: #dc3545 !important;
+    }
+    
+    @media (max-width: 768px) {
+        .display-1 {
+            font-size: 4rem;
+        }
+    }
+</style>
+{% endblock %}
